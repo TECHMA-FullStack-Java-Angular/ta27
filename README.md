@@ -1,2 +1,2 @@
-# TA26
-UD26 - Spring Mysql
+# TA27
+UD27 - Spring REST JWT
