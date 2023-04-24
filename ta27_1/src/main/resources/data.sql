@@ -1,6 +1,6 @@
 
-CREATE DATABASE IF NOT EXISTS db_ud27;
-USE db_ud27;
+CREATE DATABASE IF NOT EXISTS db_ud27_1;
+USE db_ud27_1;
 
 CREATE TABLE IF NOT EXISTS piezas (
     codigo INT auto_increment,
@@ -30,3 +30,4 @@ insert into proveedores (id,nombre)values('1A','Proveedor1');
 insert into proveedores (id,nombre)values('2B','Proveedor2');
 insert into suministra (id, codigo_pieza, id_proveedor, precio)values(1,1,'2B',200);
 insert into suministra (id, codigo_pieza, id_proveedor, precio)values(2,2,'1A',100);
+INSERT INTO Usuario (username, password, role) VALUES ('admin', '$2a$10$XURPShQNCsLjp1ESc2laoObo9QZDhxz73hJPaEv7/cBha4pk0AgP.','admin');
