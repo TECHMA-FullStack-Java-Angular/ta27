@@ -2,12 +2,15 @@ package com.example.demo.security;
 
 
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +20,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurity {
+public class WebSecurity{
+	
+	
+	
 	
 	private UserDetailsService userDetailsService;
+	
+	JWTAuthenticationFilter authenticationFilter;
+	
 
 	public WebSecurity(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
@@ -30,7 +39,6 @@ public class WebSecurity {
 		return new BCryptPasswordEncoder();
 	}
 
-	
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		/*
 		 * 1. Se desactiva el uso de cookies
@@ -40,15 +48,15 @@ public class WebSecurity {
 		 * 5. Se indica que el resto de URLs esten securizadas
 		 */
 		httpSecurity
-          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          .and()
-          .cors()
-          .and()
+          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+          .cors().and()
           .csrf().disable()
           .authorizeHttpRequests()
               .requestMatchers(HttpMethod.POST, "/register").permitAll()
               .requestMatchers(HttpMethod.POST, "/login").permitAll()
-              .anyRequest().authenticated();
+              .anyRequest().authenticated().and()
+              	.addFilter(new JWTAuthenticationFilter(authenticationFilter.getAuthenticationManager())) //crea token valido
+              	.addFilter(new JWTAuthorizationFilter(authenticationFilter.getAuthenticationManager())); //comproba el permiso de acceso++++
 	}
 
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
