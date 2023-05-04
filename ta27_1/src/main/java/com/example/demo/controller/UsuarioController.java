@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpHeaders;
 
 import com.example.demo.dao.IUsuarioDao;
-import com.example.demo.dto.Usuario;
+import com.example.demo.dto.User;
 
 @RestController
 //@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
@@ -44,19 +44,19 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/users/")
-	public Usuario saveUsuario(@RequestBody Usuario user) {
+	public User saveUsuario(@RequestBody User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usuarioDao.save(user);
 		return user;
 	}
 
 	@GetMapping("/users/")
-	public List<Usuario> getAllUsuarios() {
+	public List<User> getAllUsuarios() {
 		return usuarioDao.findAll();
 	}
 
 	@GetMapping("/users/{username}")
-	public Usuario getUsuario(@PathVariable String username) {
+	public User getUsuario(@PathVariable String username) {
 		return usuarioDao.findByUsername(username);
 	}
 	
