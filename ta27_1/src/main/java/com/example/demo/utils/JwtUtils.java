@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.service.UsuarioDetailsServiceImpl;
+import com.example.demo.service.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 
@@ -30,7 +30,7 @@ public class JwtUtils {
 	// Function to generate JWT Tokens
 	public String generateJwtToken(Authentication authentication) {
 
-		UsuarioDetailsServiceImpl userPrincipal = (UsuarioDetailsServiceImpl) authentication.getPrincipal();
+		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 		return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
