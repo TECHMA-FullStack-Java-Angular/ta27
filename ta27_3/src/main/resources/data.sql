@@ -44,3 +44,13 @@ insert into maquinas_registradoras (codigo, piso)values(3,3);
 insert into venta (id, cajero, maquina, producto)values(1,3,2,1);
 insert into venta (id, cajero, maquina, producto)values(2,2,1,2);
 insert into venta (id, cajero, maquina, producto)values(3,1,3,3);
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+INSERT INTO users(email, password, username) VALUES ('admin@ta27.com', '$2a$10$mR4MU5esBbUd6JWuwWKTA.tRy.jo4d4XRkgnamcOJfw5pJ8Ao/RDS', 'admin');
+INSERT INTO users(email, password, username) VALUES ('user@ta27.com', '$2a$10$mR4MU5esBbUd6JWuwWKTA.tRy.jo4d4XRkgnamcOJfw5pJ8Ao/RDS', 'user');
+
+INSERT INTO user_roles(user_id, role_id) VALUES (1, 1);
+INSERT INTO user_roles(user_id, role_id) VALUES (1, 2);
+INSERT INTO user_roles(user_id, role_id) VALUES (2, 1);

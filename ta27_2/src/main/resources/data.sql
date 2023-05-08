@@ -1,6 +1,8 @@
 
-CREATE DATABASE IF NOT EXISTS db_ud26_2;
-USE db_ud26_2;
+DROP table IF EXISTS user_roles;
+DROP table IF EXISTS roles;
+DROP table IF EXISTS users;
+
 
 CREATE TABLE IF NOT EXISTS cientificos (
     dni VARCHAR(8)  not null,
@@ -23,6 +25,26 @@ CREATE TABLE IF NOT EXISTS asignado_a (
     CONSTRAINT PK_asignado_a PRIMARY KEY (id),
     CONSTRAINT FK_asignado_a_cientificos FOREIGN KEY (cientifico) REFERENCES cientificos(dni),
     CONSTRAINT FK_asignado_a_proyecto FOREIGN KEY (proyecto) REFERENCES proyecto(id)
+);
+
+CREATE TABLE users(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(120) NOT NULL,
+    username VARCHAR(20) UNIQUE NOT NULL
+);
+
+CREATE TABLE roles(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) DEFAULT NULL
+);
+
+CREATE TABLE user_roles(
+	user_id INT(20) NOT NULL,
+    role_id INT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE, 
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 insert into cientificos (dni,nom_apels)values('1111111A','Cientifico 1');
