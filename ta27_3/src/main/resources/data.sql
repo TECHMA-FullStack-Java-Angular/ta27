@@ -1,6 +1,6 @@
-
-CREATE DATABASE IF NOT EXISTS db_ud26_3;
-USE db_ud26_3;
+DROP table IF EXISTS user_roles;
+DROP table IF EXISTS roles;
+DROP table IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS cajeros (
     codigo int  auto_increment,
@@ -30,6 +30,26 @@ CREATE TABLE IF NOT EXISTS venta (
     CONSTRAINT FK_venta_cajeros FOREIGN KEY (cajero) REFERENCES cajeros(codigo),
     CONSTRAINT FK_venta_productos FOREIGN KEY (producto) REFERENCES productos(codigo),
     CONSTRAINT FK_venta_maquinas_registradoras FOREIGN KEY (maquina) REFERENCES maquinas_registradoras(codigo)
+);
+
+CREATE TABLE users(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(120) NOT NULL,
+    username VARCHAR(20) UNIQUE NOT NULL
+);
+
+CREATE TABLE roles(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) DEFAULT NULL
+);
+
+CREATE TABLE user_roles(
+	user_id INT(20) NOT NULL,
+    role_id INT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE, 
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 insert into cajeros (codigo,nom_apels)values(1,'Cajero 1');
