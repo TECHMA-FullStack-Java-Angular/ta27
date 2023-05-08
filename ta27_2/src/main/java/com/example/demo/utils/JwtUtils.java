@@ -1,5 +1,6 @@
 package com.example.demo.utils;
 
+import com.example.demo.service.UserDetailsImpl;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -8,11 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.service.UserDetailsImpl;
-
 import io.jsonwebtoken.*;
 
-//Utils class
+// Utils class
 @Component
 public class JwtUtils {
 
@@ -20,11 +19,11 @@ public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
 	// Get jwt secret from application.properties
-	@Value("${UD27.jwtSecret}")
+	@Value("${ta27_2.jwtSecret}")
 	private String jwtSecret;
 
 	// Get expiration time from application.properties
-	@Value("${UD27.jwtExpirationMs}")
+	@Value("${ta27_2.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
 	// Function to generate JWT Tokens
@@ -61,5 +60,5 @@ public class JwtUtils {
 
 		return false;
 	}
-
 }
+

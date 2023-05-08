@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,19 +23,20 @@ public class PiezaController {
 	@Autowired
 	PiezaServiceImpl piezaService;
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/pieza")
 	public List<Pieza> listarPieza(){
 		return piezaService.listarPiezas();
 	}
 	
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/pieza")
 	public Pieza guardarPieza(@RequestBody Pieza pieza) {
 		
 		return piezaService.guardarPieza(pieza);
 	}
 	
-	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/pieza/{id}")
 	public Pieza piezaXID(@PathVariable(name="id") int codigo) {
 		
@@ -46,6 +48,7 @@ public class PiezaController {
 		return Pieza_xid;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/pieza/{id}")
 	public Pieza actualizarPieza(@PathVariable(name="id")int codigo,@RequestBody Pieza pieza) {
 		
@@ -66,8 +69,9 @@ public class PiezaController {
 		return Pieza_actualizada;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/pieza/{id}")
-	public void eleiminarPieza(@PathVariable(name="id")int codigo) {
+	public void eliminarPieza(@PathVariable(name="id")int codigo) {
 		piezaService.eliminarPieza(codigo);
 	}
 
